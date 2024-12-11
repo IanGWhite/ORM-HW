@@ -56,7 +56,6 @@ exports.findAll = (req, res) => {
 // Retrieve all Courses for a student from the database.
 exports.findAllForStudent = (req, res) => {
   const studentId = req.params.studentId;
-  console.log("hello")
   Course.findAll({ where: { studentId: studentId } })
     .then((data) => {
       res.send(data);
