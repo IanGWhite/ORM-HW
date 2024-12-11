@@ -15,12 +15,20 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 db.course = require("./course.model.js")(sequelize, Sequelize);
+db.student = require("./student.model.js")(sequelize, Sequelize);
 
 
-// foreign key for session
+db.course.belongsTo(
+  db.student,
+  { as: "student" },
+  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
+);
+db.student.hasMany(
+  db.course,
+  {as: "course"},
+  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
+);
 
 
-// foreign key for lessons
-//got rid of lessons
 
 module.exports = db;

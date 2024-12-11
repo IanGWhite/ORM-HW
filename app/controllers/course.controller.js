@@ -76,6 +76,20 @@ exports.findAll = (req, res) => {
     });
 };
 
+exports.findAllForStudent = (req, res) => {
+  const studentId = req.params.studentId;
+
+  Interest.findAll({ where: { studentId: studentId } })
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || "Some error occurred while retrieving interests.",
+      });
+    });
+};
+
 // Continue with other existing functions...
 
 // Find a single Course with an id

@@ -1,27 +1,30 @@
-/* app/routes/course.routes.js */
 module.exports = (app) => {
   const courses = require("../controllers/course.controller.js");
   const { authenticate } = require("../authorization/authorization.js");
   var router = require("express").Router();
 
-  // Create a new Course group
-  router.post("/", courses.create);
+  // Create a new Course for a Student
+  //router.post("/:studentId/courses/", [authenticate], courses.create);
+  router.post("/:studentId/courses/", courses.create);
 
-  // Retrieve all 
-  router.get("/", courses.findAll);
-  
-  // Retrieve a single course with id
-  router.get("/:id", courses.findOne);
+  // Retrieve all Courses for a Student
+  router.get(
+    "/:studentId/courses/",
+    courses.findAllForStudent
+  );
 
-  // Update a course with id
-  router.put("/:id", courses.update);
+  // Retrieve a single Course with id
+  //router.get("/:studentId/courses/:id", [authenticate], courses.findOne);
+  router.get("/:studentId/courses/:id", courses.findOne);
+
+  // Update a Course with id
+  router.put("/:studentId/courses/:id", courses.update);
 
   // Delete a Course with id
-  router.delete("/:id", courses.delete);
+  router.delete("/:studentId/courses/:id", courses.delete);
 
   // Delete all Courses
-  router.delete("/", courses.deleteAll);
+  router.delete("/:studentId/courses/deleteAll", courses.deleteAll);
 
-  app.use("/course-t5/courses", router);
+  app.use("/student-t5/students", router);
 };
-
